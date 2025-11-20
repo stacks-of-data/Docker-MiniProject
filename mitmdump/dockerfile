@@ -1,0 +1,11 @@
+FROM python:latest
+
+RUN pip install mitmdump
+
+RUN adduser --disabled-password --home /home/mitmdump mitmdump
+
+COPY --chmod=0777 entrypoint.sh /entrypoint.sh
+
+USER mitmdump
+
+ENTRYPOINT [ "/entrypoint.sh" ]

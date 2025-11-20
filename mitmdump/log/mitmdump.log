@@ -1,0 +1,30 @@
+[23:21:11.701] HTTP(S) proxy listening at *:8080.
+[23:21:12.359][172.19.0.2:43654] client connect
+[23:21:12.445][172.19.0.2:43658] client connect
+[23:21:12.454][172.19.0.2:43654] server connect accounts.google.com:443 (66.102.1.84:443)
+[23:21:12.613][172.19.0.2:43658] server connect example.com:443 (23.215.0.138:443)
+172.19.0.2:43654: POST https://accounts.google.com/ListAccounts?gpsia=1&source… HTTP/2.0
+      << HTTP/2.0 200 OK 0b
+172.19.0.2:43658: GET https://example.com/ HTTP/2.0
+      << HTTP/2.0 200 OK 363b
+172.19.0.2:43658: GET https://example.com/favicon.ico HTTP/2.0
+      << HTTP/2.0 404 Not Found 513b
+[23:21:15.958][172.19.0.2:53452] client connect
+[23:21:16.177][172.19.0.2:53452] server connect android.clients.google.com:443 (172.217.19.142:443)
+172.19.0.2:53452: POST https://android.clients.google.com/checkin HTTP/2.0
+      << HTTP/2.0 200 OK 471b
+[23:21:16.423][172.19.0.2:53464] client connect
+[23:21:16.515][172.19.0.2:53464] server connect mtalk.google.com:5228 (173.194.76.188:5228)
+172.19.0.2:53452: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+      << HTTP/2.0 200 OK 50b
+172.19.0.2:53452: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+      << HTTP/2.0 200 OK 50b
+172.19.0.2:53452: POST https://android.clients.google.com/c2dm/register3 HTTP/2.0
+      << HTTP/2.0 200 OK 50b
+172.19.0.2:53464 -> tcp -> mtalk.google.com:5228
+172.19.0.2:53464 <- tcp <- mtalk.google.com:5228
+172.19.0.2:53464 <- tcp <- mtalk.google.com:5228
+[23:21:21.248][172.19.0.2:53466] client connect
+[23:21:21.639][172.19.0.2:53466] server connect optimizationguide-pa.googleapis.com:443 (172.217.18.234:443)
+172.19.0.2:53466: POST https://optimizationguide-pa.googleapis.com/v1:GetModel… HTTP/2.0
+      << HTTP/2.0 400 Bad Request 193b

@@ -1,0 +1,29 @@
+services:
+  browser:
+    build: ./browser
+    container_name: browser
+    networks:
+      - sandbox-network
+    command: https://example.com
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:exec,mode=1777
+      - /var/tmp:exec,mode=1777
+      - /home/chromium:exec,mode=1777
+    dns:
+      - 8.8.8.8
+  mitmdump:
+    build: ./mitmdump
+    container_name: mitmdump
+    networks:
+      - sandbox-network
+    volumes:
+      - ./mitmdump/log:/home/mitmdump/log
+    dns:
+      - 8.8.8.8
+
+networks:
+  sandbox-network:
+    driver: bridge
