@@ -56,7 +56,7 @@ tail -f ./proxy/log/mitmdump.log
 ## Services
 
 ### Browser Service
-- **Image**: Debian with Chromium
+- **Image**: Debian
 - **Security Features**:
   - `--no-sandbox` for container compatibility
   - `no-new-privileges` security option
@@ -65,13 +65,13 @@ tail -f ./proxy/log/mitmdump.log
 - **Proxy**: Routes traffic through mitmproxy on port 8080
 
 ### mitmproxy Service
-- **Image**: Python 3 with mitmproxy
+- **Image**: Python 3
 - **Mode**: Regular (non-transparent)
 - **Port**: 8080
 - **Logging**: Captures all HTTP/HTTPS traffic to `./proxy/log/mitmdump.log`
 
 ### tcpdump Service
-- **Image**: Debian with Chromium
+- **Image**: Debian
 - **Logging**: Captures all packets data to `./logger/captures/tcpdump.pcap`
 
 ## Configuration
