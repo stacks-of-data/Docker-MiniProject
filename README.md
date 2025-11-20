@@ -86,12 +86,6 @@ services:
     command: https://suspicious-site.com
 ```
 
-Or pass at runtime:
-
-```bash
-docker compose run browser https://your-url.com
-```
-
 ### Change DNS Servers
 
 Edit `docker-compose.yml`:
