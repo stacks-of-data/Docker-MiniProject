@@ -4,7 +4,7 @@ services:
     container_name: browser
     networks:
       - sandbox-network
-    command: https://example.com
+    command: http://spotify.com
     security_opt:
       - no-new-privileges:true
     read_only: true
@@ -14,15 +14,24 @@ services:
       - /home/chromium:exec,mode=1777
     dns:
       - 8.8.8.8
-  mitmdump:
-    build: ./mitmdump
-    container_name: mitmdump
+
+  proxy:
+    build: ./proxy
+    container_name: proxy
     networks:
       - sandbox-network
     volumes:
-      - ./mitmdump/log:/home/mitmdump/log
-    dns:
-      - 8.8.8.8
+      - ./proxy/log:/home/mitmdump/log
+
+  logger:
+    build: ./logger
+    container_name: logger
+    network_mode: "container:browser"
+    volumes:
+      - ./logger/captures:/home/tcpdump/captures
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
 
 networks:
   sandbox-network:

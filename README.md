@@ -41,25 +41,16 @@ sandbox/
 
 # Start services
 docker compose up
-
-# In another terminal, view logs
-docker compose logs -f mitmdump
 ```
 
-### Test a Website
-
+### View Packets Data
 ```bash
-docker compose run browser https://example.com
+wireshark ./logger/captures/tcpdump.pcap
 ```
 
-### View Captured Traffic
-
+### View Captured Requests
 ```bash
-# View mitmdump logs
-tail -f ./mitmdump/log/mitmdump.log
-
-# Analyze with mitmproxy interactive mode (requires X11)
-mitmproxy -r ./mitmdump/log/mitmdump.dump
+tail -f ./proxy/log/mitmdump.log
 ```
 
 ## Services
@@ -77,7 +68,11 @@ mitmproxy -r ./mitmdump/log/mitmdump.dump
 - **Image**: Python 3 with mitmproxy
 - **Mode**: Regular (non-transparent)
 - **Port**: 8080
-- **Logging**: Captures all HTTP/HTTPS traffic to `./mitmdump/log/mitmdump.log`
+- **Logging**: Captures all HTTP/HTTPS traffic to `./proxy/log/mitmdump.log`
+
+### tcpdump Service
+- **Image**: Debian with Chromium
+- **Logging**: Captures all packets data to `./logger/captures/tcpdump.pcap`
 
 ## Configuration
 
@@ -107,21 +102,6 @@ dns:
   - 1.0.0.1
 ```
 
-### View Network Traffic
-
-```bash
-# Monitor tcpdump (requires tcpdump service in docker-compose)
-docker exec tcpdump tcpdump -i eth0 -n tcp or udp
-```
-
-## Security Notes
-
-⚠️ **This is a sandbox, not a firewall:**
-- Malicious websites can still attempt exploitation
-- Use only for analysis, not as primary defense
-- Keep Docker updated
-- Don't run untrusted binaries
-
 ## Cleanup
 
 Remove all containers, images, and logs:
@@ -134,43 +114,9 @@ Manual cleanup:
 
 ```bash
 docker compose down --rmi all
-docker builder prune --all --force
-rm -rf ./mitmdump/log/*
+rm -rf ./proxy/log
+rm -rf ./logger/captures
 ```
-
-## Examples
-
-### Test 1: Normal Website
-```bash
-docker compose run browser https://example.com
-```
-
-### Test 2: Local HTML File
-```bash
-docker compose run browser file:///tmp/test.html
-```
-
-### Test 3: View Captured Requests
-```bash
-tail -f ./mitmdump/log/mitmdump.log
-```
-
-## Troubleshooting
-
-### Browser exits immediately
-- Check logs: `docker logs browser`
-- Ensure URL is valid and reachable
-- Try a simpler site like `https://example.com`
-
-### mitmproxy not logging
-- Verify container is running: `docker ps`
-- Check volumes are mounted: `docker inspect mitmdump`
-- Ensure `/home/mitmdump/log` directory exists
-
-### No network traffic captured
-- Verify both containers are on `sandbox-network`
-- Check browser is using proxy: `--proxy-server=http://mitmdump:8080`
-- Ensure mitmproxy is listening: `docker logs mitmdump`
 
 ## Future Enhancements
 
